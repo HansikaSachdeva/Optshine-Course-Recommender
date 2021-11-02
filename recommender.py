@@ -10,7 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
 import nltk
-nltk.download('stopwords')
+nltk.download('all')
 
 FILTERED_COURSES = None
 SELECTED_COURSE = None
