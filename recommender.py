@@ -9,6 +9,8 @@ from nltk.corpus import stopwords
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
+import nltk
+nltk.download()
 
 FILTERED_COURSES = None
 SELECTED_COURSE = None
