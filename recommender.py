@@ -87,8 +87,8 @@ def prepare_data(df):
 
 @st.cache(allow_output_mutation=True)
 def load_data():
-	source_path1 = os.path.join("C:/Users/hansi/Desktop/Projects/Optshine_Course_Recommender/coursera-courses-overview.csv")
-	source_path2 = os.path.join("C:/Users/hansi/Desktop/Projects/Optshine_Course_Recommender/coursera-individual-courses.csv")
+	source_path1 = os.path.join("./coursera-courses-overview.csv")
+	source_path2 = os.path.join("./coursera-individual-courses.csv")
 	df_overview = pd.read_csv(source_path1)
 	df_individual = pd.read_csv(source_path2)
 	df = pd.concat([df_overview, df_individual], axis=1)
