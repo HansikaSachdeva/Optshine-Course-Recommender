@@ -182,8 +182,8 @@ def content_based_recommendations(df, input_course, courses):
 	# top 3
 	st.write("Top 5 most similar courses")
 	st.write(temp_sim)
-	st.write("Top 5 most dissimilar courses")
-	st.write(temp_dissim)
+	#st.write("Top 5 most dissimilar courses")
+	#st.write(temp_dissim)
 
 def prep_for_cbr(df):
 
