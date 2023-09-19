@@ -57,26 +57,26 @@ def prepare_data(df):
 	df['percentage_of_pay_increase_or_promotion'] = df['percentage_of_pay_increase_or_promotion'].apply(make_numeric)
 
 	def make_count_numeric(x):
-	    if('k' in x):
-	        return (float(x.replace('k','')) * 1000)
-	    elif('m' in x):
-	        return (float(x.replace('m','')) * 1000000)
-	    elif('Missing' in x):
-	        return (np.nan)
+		if('k' in x):
+			return (float(x.replace('k','')) * 1000)
+		elif('m' in x):
+			return (float(x.replace('m','')) * 1000000)
+		elif('Missing' in x):
+			return (np.nan)
 
 	df['enrolled_student_count'] = df['enrolled_student_count'].apply(make_count_numeric)
 
-    # extract time to complete
+	# extract time to complete
 	def find_time(x):
-	    l = x.split(' ')
-	    idx = 0
-	    for i in range(len(l)):
-	        if(l[i].isdigit()):
-	            idx = i 
-	    try:
-	        return (l[idx] + ' ' + l[idx+1])
-	    except:
-	        return l[idx]
+		l = x.split(' ')
+		idx = 0
+		for i in range(len(l)):
+			if(l[i].isdigit()):
+				idx = i 
+		try:
+			return (l[idx] + ' ' + l[idx+1])
+		except:
+			return l[idx]
 
 	df['estimated_time_to_complete'] = df['estimated_time_to_complete'].apply(find_time)
 
@@ -110,56 +110,56 @@ def filter(dataframe, chosen_options, feature, id):
 	return selected_records
 
 def extract_keywords(df, feature):
-    r = Rake()
-    keyword_lists = []
-    for i in range(1000):
-        descr = df[feature][i]
-        r.extract_keywords_from_text(descr)
-        key_words_dict_scores = r.get_word_degrees()
-        keywords_string = " ".join(list(key_words_dict_scores.keys()))
-        keyword_lists.append(keywords_string)
-        
-    return keyword_lists
+	r = Rake()
+	keyword_lists = []
+	for i in range(1000):
+		descr = df[feature][i]
+		r.extract_keywords_from_text(descr)
+		key_words_dict_scores = r.get_word_degrees()
+		keywords_string = " ".join(list(key_words_dict_scores.keys()))
+		keyword_lists.append(keywords_string)
+		
+	return keyword_lists
 
 def extract_keywords(df, feature):
 
-    r = Rake()
-    keyword_lists = []
-    for i in range(df[feature].shape[0]):
-        descr = df[feature][i]
-        r.extract_keywords_from_text(descr)
-        key_words_dict_scores = r.get_word_degrees()
-        keywords_string = " ".join(list(key_words_dict_scores.keys()))
-        keyword_lists.append(keywords_string)
-        
-    return keyword_lists
+	r = Rake()
+	keyword_lists = []
+	for i in range(df[feature].shape[0]):
+		descr = df[feature][i]
+		r.extract_keywords_from_text(descr)
+		key_words_dict_scores = r.get_word_degrees()
+		keywords_string = " ".join(list(key_words_dict_scores.keys()))
+		keyword_lists.append(keywords_string)
+		
+	return keyword_lists
 
 def recommendations(df, input_course, cosine_sim, find_similar=True, how_many=5):
-    
-    # initialise recommended courses list
-    recommended = []
-    selected_course = df[df['course_name']==input_course]
-    
-    # index of the course fed as input
-    idx = selected_course.index[0]
+	
+	# initialise recommended courses list
+	recommended = []
+	selected_course = df[df['course_name']==input_course]
+	
+	# index of the course fed as input
+	idx = selected_course.index[0]
 
-    # creating a Series with the similarity scores in descending order
-    if(find_similar):
-        score_series = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
-    else:
-        score_series = pd.Series(cosine_sim[idx]).sort_values(ascending = True)
+	# creating a Series with the similarity scores in descending order
+	if(find_similar):
+		score_series = pd.Series(cosine_sim[idx]).sort_values(ascending = False)
+	else:
+		score_series = pd.Series(cosine_sim[idx]).sort_values(ascending = True)
 
-    # getting the indexes of the top 'how_many' courses
-    if(len(score_series) < how_many):
-    	how_many = len(score_series)
-    top_sugg = list(score_series.iloc[1:how_many+1].index)
-    
-    # populating the list with the titles of the best 10 matching movies
-    for i in top_sugg:
-        qualified = df['course_name'].iloc[i]
-        recommended.append(qualified)
-        
-    return recommended
+	# getting the indexes of the top 'how_many' courses
+	if(len(score_series) < how_many):
+		how_many = len(score_series)
+	top_sugg = list(score_series.iloc[1:how_many+1].index)
+	
+	# populating the list with the titles of the best 10 matching movies
+	for i in top_sugg:
+		qualified = df['course_name'].iloc[i]
+		recommended.append(qualified)
+		
+	return recommended
 
 def content_based_recommendations(df, input_course, courses):
 
@@ -251,7 +251,7 @@ def prep_for_cbr(df):
 
 def main():
 
-	st.title("OptSociety")
+	st.title("OptShine")
 	st.write("Course Recommender")
 	st.sidebar.title("Set your Parameters")
 	st.sidebar.header("Preliminary Inspection")
